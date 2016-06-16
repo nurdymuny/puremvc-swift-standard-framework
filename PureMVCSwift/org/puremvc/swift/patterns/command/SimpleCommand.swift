@@ -30,7 +30,7 @@ class SimpleCommand : Notifier, ICommand
     *
     * @param notification the <code>INotification</code> to handle.
     */
-    func execute( notification: INotification )
+    func execute( _ notification: INotification )
     {
         
     }

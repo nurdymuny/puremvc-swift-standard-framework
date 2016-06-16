@@ -50,22 +50,22 @@ class Notifier
     * @param body the body of the notification
     * @param type the type of the notification
     */
-    func sendNotification ( notificationName: String , body: AnyObject , type: String )
+    func sendNotification ( _ notificationName: String , body: AnyObject , type: String )
     {
         self.facade.sendNotification( notificationName , body: body, type: type )
     }
     
-    func sendNotification( notificationName: String )
+    func sendNotification( _ notificationName: String )
     {
         self.facade.sendNotification( notificationName );
     }
     
-    func sendNotification ( notificationName: String , body: AnyObject )
+    func sendNotification ( _ notificationName: String , body: AnyObject )
     {
         self.facade.sendNotification( notificationName , body: body )
     }
     
-    func sendNotification ( notificationName: String , type: String )
+    func sendNotification ( _ notificationName: String , type: String )
     {
         self.facade.sendNotification( notificationName , type: type )
     }

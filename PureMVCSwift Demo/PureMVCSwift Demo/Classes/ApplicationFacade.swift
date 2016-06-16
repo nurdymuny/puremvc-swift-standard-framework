@@ -30,18 +30,16 @@ let EPSILON = 0.001
 class ApplicationFacade : Facade
 {
 
-    func startup( root : AnyObject )
+    private static let instance = ApplicationFacade()
+
+    func startup( _ root : AnyObject )
     {
         sendNotification( COMMAND_STARTUP , body: root )
     }
     
     override class func getInstance() -> ApplicationFacade
     {
-        dispatch_once( &Static.onceToken ,
-        {
-            Static.instance = ApplicationFacade ()
-        })
-        return Static.instance! as! ApplicationFacade
+        return ApplicationFacade.instance
     }
     
     override func initializeController ()

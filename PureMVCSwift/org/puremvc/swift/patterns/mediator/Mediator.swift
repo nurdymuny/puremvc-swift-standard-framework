@@ -38,17 +38,17 @@ class Mediator : IMediator
         return Mediator( mediatorName: nil , viewComponent: nil )
     }
     
-    class func withMediatorName ( mediatorName: String ) -> Mediator
+    class func withMediatorName ( _ mediatorName: String ) -> Mediator
     {
         return Mediator( mediatorName: mediatorName , viewComponent: nil )
     }
     
-    class func withMediatorName ( mediatorName: String , viewComponent: AnyObject ) -> Mediator
+    class func withMediatorName ( _ mediatorName: String , viewComponent: AnyObject ) -> Mediator
     {
         return Mediator( mediatorName: mediatorName , viewComponent: viewComponent )
     }
     
-    class func withViewComponent ( viewComponent: AnyObject ) -> Mediator
+    class func withViewComponent ( _ viewComponent: AnyObject ) -> Mediator
     {
         return Mediator( mediatorName: nil , viewComponent: viewComponent )
     }
@@ -96,7 +96,7 @@ class Mediator : IMediator
     * with one 'case' entry per <code>INotification</code>
     * the <code>Mediator</code> is interested in.
     */
-    func handleNotification ( notification: INotification ) -> Void
+    func handleNotification ( _ notification: INotification ) -> Void
     {
     }
     

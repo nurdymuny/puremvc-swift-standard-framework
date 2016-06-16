@@ -21,7 +21,7 @@ protocol ICommand
     * @param notification an <code>INotification</code> to handle.
     */
     
-    func execute ( notification: INotification )
+    func execute ( _ notification: INotification )
     
 }
 

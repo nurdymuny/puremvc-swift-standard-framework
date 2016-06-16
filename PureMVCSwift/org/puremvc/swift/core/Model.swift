@@ -37,9 +37,13 @@ import Foundation
 class Model : IModel
 {
     
+    private static var __once: () = {
+            Static.instance = Model()
+        }()
+    
     struct Static
     {
-        static var onceToken : dispatch_once_t = 0
+        static var onceToken : Int = 0
         static var instance : Model? = nil
     }
     
@@ -90,10 +94,7 @@ class Model : IModel
     */
     class var getInstance : Model
     {
-        dispatch_once(&Static.onceToken,
-        {
-            Static.instance = Model()
-        })
+        _ = Model.__once
         return Static.instance!
     }
     
@@ -103,7 +104,7 @@ class Model : IModel
     * @param proxyName
     * @return whether a Proxy is currently registered with the given <code>proxyName</code>.
     */
-    func hasProxy( proxyName: String ) -> Bool
+    func hasProxy( _ proxyName: String ) -> Bool
     {
         return self.proxyMap[ proxyName ] != nil
     }
@@ -113,7 +114,7 @@ class Model : IModel
     *
     * @param proxy an <code>IProxy</code> to be held by the <code>Model</code>.
     */
-    func registerProxy( proxy: IProxy )
+    func registerProxy( _ proxy: IProxy )
     {
 
         self.proxyMap[ proxy.proxyName! ] = proxy
@@ -128,7 +129,7 @@ class Model : IModel
     * @param proxyName name of the <code>IProxy</code> instance to be removed.
     * @return the <code>IProxy</code> that was removed from the <code>Model</code>
     */
-    func removeProxy( proxyName: String ) -> IProxy
+    func removeProxy( _ proxyName: String ) -> IProxy
     {
         
         let proxy : IProxy? = self.proxyMap[ proxyName ]!
@@ -150,7 +151,7 @@ class Model : IModel
     * @param proxyName
     * @return the <code>IProxy</code> instance previously registered with the given <code>proxyName</code>.
     */
-    func retrieveProxy( proxyName: String ) -> IProxy
+    func retrieveProxy( _ proxyName: String ) -> IProxy
     {
         return self.proxyMap[ proxyName ]!
     }

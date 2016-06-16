@@ -19,7 +19,7 @@ class RecordsAddInputCell : UITableViewCell
         
         super.init( coder: aDecoder )
         
-        self.selectionStyle = UITableViewCellSelectionStyle.None
+        self.selectionStyle = UITableViewCellSelectionStyle.none
         
     }
 }

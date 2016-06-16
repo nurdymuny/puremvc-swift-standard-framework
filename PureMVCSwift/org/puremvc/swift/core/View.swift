@@ -29,9 +29,13 @@ import Foundation
 class View : IView
 {
     
+    private static var __once: () = {
+            Static.instance = View()
+        }()
+    
     struct Static
     {
-        static var onceToken : dispatch_once_t = 0
+        static var onceToken : Int = 0
         static var instance : View? = nil
     }
     
@@ -84,10 +88,7 @@ class View : IView
     */
     class var getInstance : View
     {
-        dispatch_once(&Static.onceToken,
-        {
-            Static.instance = View()
-        })
+        _ = View.__once
         return Static.instance!
     }
 
@@ -97,7 +98,7 @@ class View : IView
     * @param mediatorName
     * @return whether a Mediator is registered with the given <code>mediatorName</code>.
     */
-    func hasMediator( mediatorName: String ) -> Bool
+    func hasMediator( _ mediatorName: String ) -> Bool
     {
         return self.mediatorMap[ mediatorName ] != nil;
     }
@@ -112,7 +113,7 @@ class View : IView
     *
     * @param notification the <code>INotification</code> to notify <code>IObservers</code> of.
     */
-    func notifiyObservers( notification: INotification )
+    func notifiyObservers( _ notification: INotification )
     {
         if let observers : Array<IObserver> = self.observerMap[ notification.name! ]
         {
@@ -139,7 +140,7 @@ class View : IView
     *
     * @param mediator a reference to the <code>IMediator</code> instance
     */
-    func registerMediator( mediator: IMediator )
+    func registerMediator( _ mediator: IMediator )
     {
         
         if ( self.mediatorMap[ mediator.name! ] != nil )
@@ -174,7 +175,7 @@ class View : IView
     * @param notificationName the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
     * @param observer the <code>IObserver</code> to register
     */
-    func registerObserver( notificationName: String , observer: IObserver )
+    func registerObserver( _ notificationName: String , observer: IObserver )
     {
         
         var observers : Array<IObserver>? = self.observerMap[ notificationName ]
@@ -198,7 +199,7 @@ class View : IView
     * @param mediatorName name of the <code>IMediator</code> instance to be removed.
     * @return the <code>IMediator</code> that was removed from the <code>View</code>
     */
-    func removeMediator( mediatorName: String ) -> IMediator
+    func removeMediator( _ mediatorName: String ) -> IMediator
     {
         
         let mediator : IMediator? = self.mediatorMap[ mediatorName ]!
@@ -213,7 +214,7 @@ class View : IView
                 self.removeObserver( notificationName , notifyContext: mediator!.context() )
             }
             mediator!.onRemove()
-            mediatorMap.removeValueForKey( mediatorName )
+            mediatorMap.removeValue( forKey: mediatorName )
         }
         
         return mediator!
@@ -226,7 +227,7 @@ class View : IView
     * @param notificationName which observer list to remove from
     * @param notifyContext remove the observer with this object as its notifyContext
     */
-    func removeObserver( notificationName: String , notifyContext: AnyObject )
+    func removeObserver( _ notificationName: String , notifyContext: AnyObject )
     {
         
         var observers : Array<IObserver>? = self.observerMap[ notificationName ]!
@@ -234,7 +235,7 @@ class View : IView
         if ( observers != nil )
         {
             
-            for var i : Int = 0; i < observers!.count; ++i
+            for i in 0 ..< observers!.count
             {
                 
                 let observer : IObserver = observers![ i ]
@@ -242,7 +243,7 @@ class View : IView
                 if ( observer.compareNotifyContext( notifyContext ))
                 {
                     
-                    observers!.removeAtIndex( i )
+                    observers!.remove( at: i )
                     
                     break
                     
@@ -253,7 +254,7 @@ class View : IView
         
         if ( observers!.count == 0 )
         {
-            self.observerMap.removeValueForKey( notificationName )
+            self.observerMap.removeValue( forKey: notificationName )
         }
         
     }
@@ -264,7 +265,7 @@ class View : IView
     * @param mediatorName the name of the <code>IMediator</code> instance to retrieve.
     * @return the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
     */
-    func retrieveMediator( mediatorName: String ) -> IMediator
+    func retrieveMediator( _ mediatorName: String ) -> IMediator
     {
         return self.mediatorMap[ mediatorName ]!;
     }

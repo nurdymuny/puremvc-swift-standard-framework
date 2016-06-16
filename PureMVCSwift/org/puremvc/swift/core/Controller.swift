@@ -41,9 +41,13 @@ import Foundation
 class Controller : IController
 {
     
+    private static var __once: () = {
+            Static.instance = Controller()
+        }()
+    
     struct Static
     {
-        static var onceToken : dispatch_once_t = 0
+        static var onceToken : Int = 0
         static var instance : Controller? = nil
     }
     
@@ -105,10 +109,7 @@ class Controller : IController
     */
     class var getInstance : Controller
     {
-        dispatch_once(&Static.onceToken,
-        {
-            Static.instance = Controller()
-        })
+        _ = Controller.__once
         return Static.instance!
     }
     
@@ -118,7 +119,7 @@ class Controller : IController
     *
     * @param notification an <code>INotification</code>
     */
-    func executeCommand ( notification: INotification )
+    func executeCommand ( _ notification: INotification )
     {
         
         let commandClass : Notifier.Type = self.commandMap[ notification.name! ]!;
@@ -143,7 +144,7 @@ class Controller : IController
     * @param notificationName
     * @return whether a Command is currently registered for the given <code>notificationName</code>.
     */
-    func hasCommand ( notificationName: String ) -> Bool
+    func hasCommand ( _ notificationName: String ) -> Bool
     {
         return self.commandMap[ notificationName ] != nil;
     }
@@ -163,7 +164,7 @@ class Controller : IController
     * @param notificationName the name of the <code>INotification</code>
     * @param commandClass the <code>Class</code> of the <code>ICommand</code>
     */
-    func registerCommand ( notificationName: String , commandClass: Notifier.Type )
+    func registerCommand ( _ notificationName: String , commandClass: Notifier.Type )
     {
         
         if ( self.commandMap[ notificationName ] == nil )
@@ -184,14 +185,14 @@ class Controller : IController
     *
     * @param notificationName the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
     */
-    func removeCommand( notificationName: String )
+    func removeCommand( _ notificationName: String )
     {
         if ( self.hasCommand( notificationName ))
         {
             
             self.view?.removeObserver( notificationName , notifyContext: self )
             
-            self.commandMap.removeValueForKey( notificationName )
+            self.commandMap.removeValue( forKey: notificationName )
             
         }
     }

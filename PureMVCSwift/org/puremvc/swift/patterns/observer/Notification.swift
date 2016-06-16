@@ -47,22 +47,22 @@ class Notification : INotification
     * @param body the <code>Notification</code> body.
     * @param type the type of the <code>Notification</code>
     */
-    class func withName ( name: String , body: AnyObject? , type: String? ) -> Notification
+    class func withName ( _ name: String , body: AnyObject? , type: String? ) -> Notification
     {
         return Notification( name: name , body: body , type: type );
     }
     
-    class func withName ( name: String ) -> Notification
+    class func withName ( _ name: String ) -> Notification
     {
         return Notification( name: name , body: nil , type: nil )
     }
     
-    class func withName ( name: String , body: AnyObject? ) -> Notification
+    class func withName ( _ name: String , body: AnyObject? ) -> Notification
     {
         return Notification( name: name , body: body , type: nil )
     }
     
-    class func withName ( name: String , type: String? ) -> Notification
+    class func withName ( _ name: String , type: String? ) -> Notification
     {
         return Notification( name: name , body: nil , type: type )
     }

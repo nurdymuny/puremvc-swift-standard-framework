@@ -25,26 +25,26 @@ class RecordsOverviewController : UITableViewController
                 
                 self.tableView.beginUpdates()
                 
-                for ( index, record ) in (oldValue!).enumerate()
+                for ( index, record ) in (oldValue!).enumerated()
                 {
                     
                     let recordWasRemoved = !self.records!.contains( record )
                     
                     if ( recordWasRemoved )
                     {
-                        self.tableView.deleteRowsAtIndexPaths( [ NSIndexPath( forRow: index , inSection: 0 ) ], withRowAnimation: .Fade )
+                        self.tableView.deleteRows( at: [ IndexPath( row: index , section: 0 ) ], with: .fade )
                     }
                     
                 }
                 
-                for ( index, record ) in (self.records!).enumerate()
+                for ( index, record ) in (self.records!).enumerated()
                 {
                     
                     let recordWasAdded = !oldValue!.contains( record )
                     
                     if ( recordWasAdded )
                     {
-                        self.tableView.insertRowsAtIndexPaths( [ NSIndexPath( forRow: index , inSection: 0 ) ], withRowAnimation: .Fade )
+                        self.tableView.insertRows( at: [ IndexPath( row: index , section: 0 ) ], with: .fade )
                     }
                     
                 }
@@ -65,7 +65,7 @@ class RecordsOverviewController : UITableViewController
     {
         super.awakeFromNib()
         
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        if UIDevice.current().userInterfaceIdiom == .pad
         {
             self.clearsSelectionOnViewWillAppear = false
             self.preferredContentSize = CGSize(width: 320.0, height: 600.0)
@@ -81,7 +81,7 @@ class RecordsOverviewController : UITableViewController
         
     }
     
-    override func viewWillAppear( animated: Bool )
+    override func viewWillAppear( _ animated: Bool )
     {
         
         super.viewWillAppear( animated )
@@ -96,7 +96,7 @@ class RecordsOverviewController : UITableViewController
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "didPressAdd:" )
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(RecordsOverviewController.didPressAdd(_:)) )
         self.navigationItem.rightBarButtonItem = addButton
         
     }
@@ -104,17 +104,17 @@ class RecordsOverviewController : UITableViewController
     func setupForiPad ()
     {
         
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        if UIDevice.current().userInterfaceIdiom == .pad
         {
-            self.tableView.selectRowAtIndexPath( NSIndexPath( forRow: 0 , inSection: 0 ) , animated: false, scrollPosition: UITableViewScrollPosition.Top )
-            self.performSegueWithIdentifier( SEGUE_OVERVIEW_DETAIL , sender: self )
+            self.tableView.selectRow( at: IndexPath( row: 0 , section: 0 ) , animated: false, scrollPosition: UITableViewScrollPosition.top )
+            self.performSegue( withIdentifier: SEGUE_OVERVIEW_DETAIL , sender: self )
         }
 
     }
     
     // MARK: - Segues
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+    override func prepare(for segue: UIStoryboardSegue, sender: AnyObject?)
     {
 
         if segue.identifier == SEGUE_OVERVIEW_DETAIL
@@ -127,13 +127,13 @@ class RecordsOverviewController : UITableViewController
         }
     }
     
-    func showDetailViewController( vc: RecordsDetailController )
+    func showDetailViewController( _ vc: RecordsDetailController )
     {
         
         if let indexPath = self.tableView.indexPathForSelectedRow
         {
             
-            let record = records?[ indexPath.row ]
+            let record = records?[ (indexPath as NSIndexPath).row ]
             
             vc.record = record
             vc.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -145,12 +145,12 @@ class RecordsOverviewController : UITableViewController
 
     // MARK: - Table View
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if let count = self.records?.count
         {
@@ -159,11 +159,11 @@ class RecordsOverviewController : UITableViewController
         return 0
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier( kOverviewCell , forIndexPath: indexPath) 
-        let record = records?[ indexPath.row ]
+        let cell = tableView.dequeueReusableCell( withIdentifier: kOverviewCell , for: indexPath) 
+        let record = records?[ (indexPath as NSIndexPath).row ]
 
         cell.textLabel?.text = record?.interpret
         
@@ -171,33 +171,33 @@ class RecordsOverviewController : UITableViewController
         
     }
 
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
     {
         // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+        if UIDevice.current().userInterfaceIdiom == .pad
         {
             showDetailViewController( self.detailViewController! )
         }
         else
         {
-            performSegueWithIdentifier( SEGUE_OVERVIEW_DETAIL , sender: self )
+            performSegue( withIdentifier: SEGUE_OVERVIEW_DETAIL , sender: self )
         }
     }
 
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath)
     {
-        if editingStyle == .Delete
+        if editingStyle == .delete
         {
-            ApplicationFacade.getInstance().sendNotification( EVENT_RECORD_SHOULD_REMOVE , body: self.records?[ indexPath.row ] );
+            ApplicationFacade.getInstance().sendNotification( EVENT_RECORD_SHOULD_REMOVE , body: self.records?[ (indexPath as NSIndexPath).row ] );
         }
     }
 
-    func didPressAdd( sender: AnyObject )
+    func didPressAdd( _ sender: AnyObject )
     {
         ApplicationFacade.getInstance().sendNotification( EVENT_RECORD_SHOULD_ADD )
     }

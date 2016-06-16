@@ -11,17 +11,17 @@ import Foundation
 extension Array
     {
     
-    func indexOf <U: Equatable> (item: U) -> Int?
+    func indexOf <U: Equatable> (_ item: U) -> Int?
     {
         if item is Element
         {
-            return unsafeBitCast(self, [U].self).indexOf(item)
+            return unsafeBitCast(self, to: [U].self).indexOf(item)
         }
         
         return nil
     }
     
-    func contains<T : Equatable>(obj: T) -> Bool
+    func contains<T : Equatable>(_ obj: T) -> Bool
     {
         
         let filtered = self.filter { $0 as? T == obj }
@@ -30,10 +30,10 @@ extension Array
         
     }
     
-    mutating func removeObject<U: Equatable>(object: U)
+    mutating func removeObject<U: Equatable>(_ object: U)
     {
         var index: Int?
-        for (idx, objectToCompare) in self.enumerate()
+        for (idx, objectToCompare) in self.enumerated()
         {
             if let to = objectToCompare as? U
             {
@@ -46,14 +46,14 @@ extension Array
         
         if(index != nil)
         {
-            self.removeAtIndex(index!)
+            self.remove(at: index!)
         }
     }
     
-    func combine( separator: String ) -> String
+    func combine( _ separator: String ) -> String
     {
         var str : String = ""
-        for (idx, item) in self.enumerate()
+        for (idx, item) in self.enumerated()
         {
             str += "\(item)"
             if idx < self.count-1

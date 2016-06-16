@@ -19,34 +19,34 @@ class RecordsAddGenreController : UITableViewController
     
     // MARK: - Table View
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return delegate!.genres.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier( kGenreCell , forIndexPath: indexPath )
-        let genre = delegate!.genres[ indexPath.row ]
+        let cell = tableView.dequeueReusableCell( withIdentifier: kGenreCell , for: indexPath )
+        let genre = delegate!.genres[ (indexPath as NSIndexPath).row ]
         
         cell.textLabel?.text = genre
-        cell.accessoryType = delegate!.genresSelected.contains( genre ) ? UITableViewCellAccessoryType.Checkmark : UITableViewCellAccessoryType.None
+        cell.accessoryType = delegate!.genresSelected.contains( genre ) ? UITableViewCellAccessoryType.checkmark : UITableViewCellAccessoryType.none
         
         return cell
         
     }
     
-    override func tableView( tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath )
+    override func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath )
     {
         
-        let cell = tableView.cellForRowAtIndexPath( indexPath )
-        let genre = delegate!.genres[ indexPath.row ]
+        let cell = tableView.cellForRow( at: indexPath )
+        let genre = delegate!.genres[ (indexPath as NSIndexPath).row ]
         
         if var d = delegate
         {
@@ -55,7 +55,7 @@ class RecordsAddGenreController : UITableViewController
                 
                 d.genresSelected.removeObject( genre )
                 
-                cell?.accessoryType = UITableViewCellAccessoryType.None
+                cell?.accessoryType = UITableViewCellAccessoryType.none
                 
             }
             else
@@ -63,16 +63,16 @@ class RecordsAddGenreController : UITableViewController
                 
                 d.genresSelected.append( genre )
                 
-                cell?.accessoryType = UITableViewCellAccessoryType.Checkmark
+                cell?.accessoryType = UITableViewCellAccessoryType.checkmark
                 
             }
         }
         
-        delegate!.genresSelected.sortInPlace { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        delegate!.genresSelected.sort { $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending }
         
     }
     
-    override func viewDidDisappear(animated: Bool)
+    override func viewDidDisappear(_ animated: Bool)
     {
         
         super.viewDidDisappear( animated )

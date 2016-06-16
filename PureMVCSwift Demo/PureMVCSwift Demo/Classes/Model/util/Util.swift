@@ -10,20 +10,16 @@ import Foundation
 
 typealias dispatch_cancelable_closure = (cancel : Bool) -> ()
 
-func delay(time:NSTimeInterval, closure:()->()) ->  dispatch_cancelable_closure?
+func delay(_ time:TimeInterval, closure:()->()) ->  dispatch_cancelable_closure?
 {
     
-    func dispatch_later(clsr:()->())
+    func dispatch_later(_ clsr:()->())
     {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(time * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(), clsr)
+        DispatchQueue.main.after(
+            when: DispatchTime.now() + DispatchTimeInterval.milliseconds(Int(time * 1000)), execute: clsr)
     }
     
-    var closure:dispatch_block_t? = closure
+    var closure: (() -> Void)? = closure
     var cancelableClosure:dispatch_cancelable_closure?
     
     let delayedClosure:dispatch_cancelable_closure = { cancel in
@@ -31,7 +27,7 @@ func delay(time:NSTimeInterval, closure:()->()) ->  dispatch_cancelable_closure?
         {
             if (cancel == false)
             {
-                dispatch_async(dispatch_get_main_queue(), clsr);
+                DispatchQueue.main.async(execute: clsr);
             }
         }
         closure = nil

@@ -33,7 +33,7 @@ protocol IFacade
     * @param notificationName
     * @return whether a Command is currently registered for the given <code>notificationName</code>.
     */
-    func hasCommand ( notificationName: String ) -> Bool
+    func hasCommand ( _ notificationName: String ) -> Bool
     
     /**
     * Check if a Mediator is registered or not
@@ -41,7 +41,7 @@ protocol IFacade
     * @param mediatorName
     * @return whether a Mediator is registered with the given <code>mediatorName</code>.
     */
-    func hasMediator ( mediatorName: String ) -> Bool
+    func hasMediator ( _ mediatorName: String ) -> Bool
     
     /**
     * Check if a Proxy is registered
@@ -49,7 +49,7 @@ protocol IFacade
     * @param proxyName
     * @return whether a Proxy is currently registered with the given <code>proxyName</code>.
     */
-    func hasProxy ( proxyName: String ) -> Bool
+    func hasProxy ( _ proxyName: String ) -> Bool
     
     /**
     * Notify the <code>IObservers</code> for a particular <code>INotification</code>.
@@ -65,7 +65,7 @@ protocol IFacade
     *
     * @param notification the <code>INotification</code> to notify <code>IObservers</code> of.
     */
-    func notifyObservers ( notification: INotification )
+    func notifyObservers ( _ notification: INotification )
     
     /**
     * Register an <code>ICommand</code> with the <code>Controller</code>.
@@ -73,28 +73,28 @@ protocol IFacade
     * @param notificationName the name of the <code>INotification</code> to associate the <code>ICommand</code> with.
     * @param commandClassRef a reference to the <code>Class</code> of the <code>ICommand</code>.
     */
-    func registerCommand( notificationName: String , commandClass: Notifier.Type )
+    func registerCommand( _ notificationName: String , commandClass: Notifier.Type )
     
     /**
     * Register an <code>IMediator</code> instance with the <code>View</code>.
     *
     * @param mediator a reference to the <code>IMediator</code> instance
     */
-    func registerMediator ( mediator: IMediator )
+    func registerMediator ( _ mediator: IMediator )
     
     /**
     * Register an <code>IProxy</code> instance with the <code>Model</code>.
     *
     * @param proxy the <code>IProxy</code> to be registered with the <code>Model</code>.
     */
-    func registerProxy ( proxy : IProxy )
+    func registerProxy ( _ proxy : IProxy )
     
     /**
     * Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping from the Controller.
     *
     * @param notificationName the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
     */
-    func removeCommand ( notificationName: String )
+    func removeCommand ( _ notificationName: String )
     
     /**
     * Remove a <code>IMediator</code> instance from the <code>View</code>.
@@ -102,7 +102,7 @@ protocol IFacade
     * @param mediatorName name of the <code>IMediator</code> instance to be removed.
     * @return the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
     */
-    func removeMediator ( mediatorName: String ) -> IMediator
+    func removeMediator ( _ mediatorName: String ) -> IMediator
     
     /**
     * Remove an <code>IProxy</code> instance from the <code>Model</code> by name.
@@ -110,7 +110,7 @@ protocol IFacade
     * @param proxyName the <code>IProxy</code> to remove from the <code>Model</code>.
     * @return the <code>IProxy</code> that was removed from the <code>Model</code>
     */
-    func removeProxy ( proxyName: String ) -> IProxy
+    func removeProxy ( _ proxyName: String ) -> IProxy
     
     /**
     * Retrieve an <code>IMediator</code> instance from the <code>View</code>.
@@ -118,7 +118,7 @@ protocol IFacade
     * @param mediatorName the name of the <code>IMediator</code> instance to retrievve
     * @return the <code>IMediator</code> previously registered with the given <code>mediatorName</code>.
     */
-    func retrieveMediator ( mediatorName: String ) -> IMediator
+    func retrieveMediator ( _ mediatorName: String ) -> IMediator
     
     /**
     * Retrieve a <code>IProxy</code> from the <code>Model</code> by name.
@@ -126,7 +126,7 @@ protocol IFacade
     * @param proxyName the name of the <code>IProxy</code> instance to be retrieved.
     * @return the <code>IProxy</code> previously regisetered by <code>proxyName</code> with the <code>Model</code>.
     */
-    func retrieveProxy ( proxyName: String ) -> IProxy
+    func retrieveProxy ( _ proxyName: String ) -> IProxy
     
     /**
     * Create and send an <code>INotification</code>.
@@ -135,9 +135,9 @@ protocol IFacade
     * @param body the body of the notification
     * @param type the type of the notification
     */
-    func sendNotification ( notificationName: String )
-    func sendNotification ( notificationName: String , body: AnyObject? )
-    func sendNotification ( notificationName: String , body: AnyObject? , type: String? )
-    func sendNotification ( notificationName: String , type: String? )
+    func sendNotification ( _ notificationName: String )
+    func sendNotification ( _ notificationName: String , body: AnyObject? )
+    func sendNotification ( _ notificationName: String , body: AnyObject? , type: String? )
+    func sendNotification ( _ notificationName: String , type: String? )
     
 }

@@ -43,9 +43,9 @@ protocol INotifier
     * @param body the body of the notification
     * @param type the type of the notification
     */
-    func sendNotification ( notificationName: String )
-    func sendNotification ( notificationName: String , body: AnyObject  )
-    func sendNotification ( notificationName: String , body: AnyObject , type: String )
-    func sendNotification ( notificationName: String , type: String  )
+    func sendNotification ( _ notificationName: String )
+    func sendNotification ( _ notificationName: String , body: AnyObject  )
+    func sendNotification ( _ notificationName: String , body: AnyObject , type: String )
+    func sendNotification ( _ notificationName: String , type: String  )
     
 }

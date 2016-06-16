@@ -66,7 +66,7 @@ protocol IMediator
     *
     * @param notification the <code>INotification</code> to be handled
     */
-    func handleNotification ( notification: INotification ) -> Void
+    func handleNotification ( _ notification: INotification ) -> Void
     
     /**
     * List <code>INotification</code> interests.

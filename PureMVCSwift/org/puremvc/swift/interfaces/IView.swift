@@ -35,7 +35,7 @@ protocol IView
     * @param mediatorName
     * @return whether a Mediator is registered with the given <code>mediatorName</code>.
     */
-    func hasMediator ( mediatorName: String ) -> Bool
+    func hasMediator ( _ mediatorName: String ) -> Bool
     
     /**
     * Notify the <code>IObservers</code> for a particular <code>INotification</code>.
@@ -47,7 +47,7 @@ protocol IView
     *
     * @param notification the <code>INotification</code> to notify <code>IObservers</code> of.
     */
-    func notifiyObservers ( notification: INotification )
+    func notifiyObservers ( _ notification: INotification )
     
     /**
     * Register an <code>IMediator</code> instance with the <code>View</code>.
@@ -65,7 +65,7 @@ protocol IView
     *
     * @param mediator a reference to the <code>IMediator</code> instance
     */
-    func registerMediator ( mediator : IMediator )
+    func registerMediator ( _ mediator : IMediator )
     
     /**
     * Register an <code>IObserver</code> to be notified
@@ -74,7 +74,7 @@ protocol IView
     * @param notificationName the name of the <code>INotifications</code> to notify this <code>IObserver</code> of
     * @param observer the <code>IObserver</code> to register
     */
-    func registerObserver ( notificationName: String , observer: IObserver )
+    func registerObserver ( _ notificationName: String , observer: IObserver )
     
     /**
     * Remove an <code>IMediator</code> from the <code>View</code>.
@@ -82,7 +82,7 @@ protocol IView
     * @param mediatorName name of the <code>IMediator</code> instance to be removed.
     * @return the <code>IMediator</code> that was removed from the <code>View</code>
     */
-    func removeMediator ( mediatorName: String ) -> IMediator
+    func removeMediator ( _ mediatorName: String ) -> IMediator
     
     /**
     * Remove a group of observers from the observer list for a given Notification name.
@@ -90,7 +90,7 @@ protocol IView
     * @param notificationName which observer list to remove from
     * @param notifyContext removed the observers with this object as their notifyContext
     */
-    func removeObserver ( notificationName: String , notifyContext: AnyObject )
+    func removeObserver ( _ notificationName: String , notifyContext: AnyObject )
     
     /**
     * Retrieve an <code>IMediator</code> from the <code>View</code>.
@@ -98,6 +98,6 @@ protocol IView
     * @param mediatorName the name of the <code>IMediator</code> instance to retrieve.
     * @return the <code>IMediator</code> instance previously registered with the given <code>mediatorName</code>.
     */
-    func retrieveMediator ( mediatorName: String ) -> IMediator
+    func retrieveMediator ( _ mediatorName: String ) -> IMediator
     
 }

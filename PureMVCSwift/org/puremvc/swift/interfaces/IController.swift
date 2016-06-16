@@ -39,7 +39,7 @@ protocol IController
     *
     * @param notification the <code>INotification</code> to execute the associated <code>ICommand</code> for
     */
-    func executeCommand ( notification: INotification )
+    func executeCommand ( _ notification: INotification )
     
     /**
     * Check if a Command is registered for a given Notification
@@ -47,7 +47,7 @@ protocol IController
     * @param notificationName
     * @return whether a Command is currently registered for the given <code>notificationName</code>.
     */
-    func hasCommand ( notificationName: String ) -> Bool
+    func hasCommand ( _ notificationName: String ) -> Bool
     
     /**
     * Register a particular <code>ICommand</code> class as the handler
@@ -56,13 +56,13 @@ protocol IController
     * @param notificationName the name of the <code>INotification</code>
     * @param commandClassRef the Class of the <code>ICommand</code>
     */
-    func registerCommand ( notificationName: String , commandClass: Notifier.Type )
+    func registerCommand ( _ notificationName: String , commandClass: Notifier.Type )
     
     /**
     * Remove a previously registered <code>ICommand</code> to <code>INotification</code> mapping.
     *
     * @param notificationName the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
     */
-    func removeCommand ( notificationName: String )
+    func removeCommand ( _ notificationName: String )
     
 }

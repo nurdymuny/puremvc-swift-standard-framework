@@ -81,7 +81,7 @@ class MacroCommand : Notifier, ICommand
     *
     * @param commandClass a reference to the <code>Class</code> of the <code>ICommand</code>.
     */
-    func addSubCommand( commandClass : Notifier.Type? )
+    func addSubCommand( _ commandClass : Notifier.Type? )
     {
         self.subCommands?.append( commandClass! )
     }
@@ -95,7 +95,7 @@ class MacroCommand : Notifier, ICommand
     *
     * @param notification the <code>INotification</code> object to be passsed to each <i>SubCommand</i>.
     */
-    func execute( notification: INotification )
+    func execute( _ notification: INotification )
     {
 
         for commandClass : Notifier.Type in self.subCommands!

@@ -37,7 +37,7 @@ class Observer : IObserver
     /**
     * Static Convienence Constructor.
     */
-    class func withNotifyMethod( notifyMethod: ( notification: INotification ) -> Void , notifyContext: AnyObject ) -> Observer
+    class func withNotifyMethod( _ notifyMethod: ( notification: INotification ) -> Void , notifyContext: AnyObject ) -> Observer
     {
         return Observer( notifyMethod: notifyMethod , notifyContext: notifyContext )
     }
@@ -64,7 +64,7 @@ class Observer : IObserver
     * @param object the object to compare
     * @return boolean indicating if the object and the notification context are the same
     */
-    func compareNotifyContext( object: AnyObject ) -> Bool
+    func compareNotifyContext( _ object: AnyObject ) -> Bool
     {
         return object.isEqual( notifyContext );
     }
@@ -74,7 +74,7 @@ class Observer : IObserver
     *
     * @param notification the <code>INotification</code> to pass to the interested object's notification method.
     */
-    func notifyObserver( notification: INotification )
+    func notifyObserver( _ notification: INotification )
     {
         self.notifyMethod( notification: notification )
     }

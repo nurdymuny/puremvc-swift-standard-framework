@@ -51,13 +51,13 @@ class RecordProxy : Proxy
 
         var error: NSError?
         
-        let bundle = NSBundle.mainBundle()
+        let bundle = Bundle.main()
         let path = bundle.pathForResource( "data" , ofType: "json" )
-        let data: NSData?
+        let data: Data?
         
         do
         {
-            data = try NSData( contentsOfFile: path! , options: NSDataReadingOptions.DataReadingUncached )
+            data = try Data( contentsOf: URL(fileURLWithPath: path!) , options: NSData.ReadingOptions.dataReadingUncached )
         }
         catch let error1 as NSError
         {
@@ -87,15 +87,15 @@ class RecordProxy : Proxy
     
     func sortRecordsByInterpret ()
     {
-        records.sortInPlace { $0.interpret?.localizedCaseInsensitiveCompare( $1.interpret! ) == NSComparisonResult.OrderedAscending }
+        records.sort { $0.interpret?.localizedCaseInsensitiveCompare( $1.interpret! ) == ComparisonResult.orderedAscending }
     }
     
     func sortGenresByName ()
     {
-        genres.sortInPlace { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        genres.sort { $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending }
     }
     
-    func addRecord ( record: RecordVO )
+    func addRecord ( _ record: RecordVO )
     {
         
         records.append( record )
@@ -106,10 +106,10 @@ class RecordProxy : Proxy
         
     }
     
-    func removeRecord ( record: RecordVO )
+    func removeRecord ( _ record: RecordVO )
     {
         
-        records.removeAtIndex( self.records.indexOf( record )!)
+        records.remove( at: self.records.index( of: record )!)
         
         ApplicationFacade.getInstance().sendNotification( EVENT_RECORD_DID_REMOVE , body: record )
         

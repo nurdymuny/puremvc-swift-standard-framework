@@ -34,8 +34,7 @@ class Facade : IFacade
     
     struct Static
     {
-        static var onceToken : dispatch_once_t = 0
-        static var instance : Facade? = nil
+        static var instance = Facade()
     }
     
     var controller : IController?
@@ -56,8 +55,6 @@ class Facade : IFacade
     */
     init ()
     {
-        
-        assert( Static.instance == nil, "Facade Singleton already initialized!" )
         
         self.initializeFacade()
         
@@ -85,11 +82,7 @@ class Facade : IFacade
     */
     class func getInstance() -> Facade
     {
-        dispatch_once(&Static.onceToken,
-        {
-            Static.instance = Facade()
-        })
-        return Static.instance!
+        return Static.instance
     }
 
     
@@ -192,22 +185,22 @@ class Facade : IFacade
     * @param body the body of the notification
     * @param type the type of the notification
     */
-    func sendNotification( notificationName: String , body: AnyObject? , type: String? )
+    func sendNotification( _ notificationName: String , body: AnyObject? , type: String? )
     {
         self.notifyObservers( Notification.withName( notificationName , body: body , type: type ))
     }
     
-    func sendNotification ( notificationName: String )
+    func sendNotification ( _ notificationName: String )
     {
         self.sendNotification( notificationName , body:nil , type:nil )
     }
     
-    func sendNotification ( notificationName: String , body: AnyObject? )
+    func sendNotification ( _ notificationName: String , body: AnyObject? )
     {
         self.sendNotification ( notificationName , body: body , type: nil )
     }
     
-    func sendNotification ( notificationName: String , type: String? )
+    func sendNotification ( _ notificationName: String , type: String? )
     {
         self.sendNotification ( notificationName , body: nil , type: type )
     }
@@ -218,7 +211,7 @@ class Facade : IFacade
     * @param notificationName
     * @return whether a Command is currently registered for the given <code>notificationName</code>.
     */
-    func hasCommand( notificationName: String ) -> Bool
+    func hasCommand( _ notificationName: String ) -> Bool
     {
         return controller!.hasCommand( notificationName )
     }
@@ -229,7 +222,7 @@ class Facade : IFacade
     * @param mediatorName
     * @return whether a Mediator is registered with the given <code>mediatorName</code>.
     */
-    func hasMediator ( mediatorName: String ) -> Bool
+    func hasMediator ( _ mediatorName: String ) -> Bool
     {
         return view!.hasMediator( mediatorName )
     }
@@ -240,7 +233,7 @@ class Facade : IFacade
     * @param proxyName
     * @return whether a Proxy is currently registered with the given <code>proxyName</code>.
     */
-    func hasProxy ( proxyName: String ) -> Bool
+    func hasProxy ( _ proxyName: String ) -> Bool
     {
         return model!.hasProxy ( proxyName )
     }
@@ -258,7 +251,7 @@ class Facade : IFacade
     *
     * @param notification the <code>INotification</code> to have the <code>View</code> notify <code>Observers</code> of.
     */
-    func notifyObservers( notification: INotification )
+    func notifyObservers( _ notification: INotification )
     {
         view!.notifiyObservers( notification )
     }
@@ -269,7 +262,7 @@ class Facade : IFacade
     * @param notificationName the name of the <code>INotification</code> to associate the <code>ICommand</code> with
     * @param commandClassRef a reference to the Class of the <code>ICommand</code>
     */
-    func registerCommand ( notificationName: String , commandClass: Notifier.Type )
+    func registerCommand ( _ notificationName: String , commandClass: Notifier.Type )
     {
         controller!.registerCommand( notificationName, commandClass: commandClass )
     }
@@ -279,7 +272,7 @@ class Facade : IFacade
     *
     * @param mediator a reference to the <code>IMediator</code>
     */
-    func registerMediator ( mediator: IMediator )
+    func registerMediator ( _ mediator: IMediator )
     {
         view!.registerMediator( mediator )
     }
@@ -289,7 +282,7 @@ class Facade : IFacade
     *
     * @param proxy the <code>IProxy</code> instance to be registered with the <code>Model</code>.
     */
-    func registerProxy ( proxy: IProxy )
+    func registerProxy ( _ proxy: IProxy )
     {
         model!.registerProxy( proxy )
     }
@@ -299,7 +292,7 @@ class Facade : IFacade
     *
     * @param notificationName the name of the <code>INotification</code> to remove the <code>ICommand</code> mapping for
     */
-    func removeCommand ( notificationName: String )
+    func removeCommand ( _ notificationName: String )
     {
         controller!.removeCommand( notificationName )
     }
@@ -310,7 +303,7 @@ class Facade : IFacade
     * @param mediatorName name of the <code>IMediator</code> to be removed.
     * @return the <code>IMediator</code> that was removed from the <code>View</code>
     */
-    func removeMediator ( mediatorName: String ) -> IMediator
+    func removeMediator ( _ mediatorName: String ) -> IMediator
     {
         return view!.removeMediator( mediatorName )
     }
@@ -321,7 +314,7 @@ class Facade : IFacade
     * @param proxyName the <code>IProxy</code> to remove from the <code>Model</code>.
     * @return the <code>IProxy</code> that was removed from the <code>Model</code>
     */
-    func removeProxy ( proxyName: String ) -> IProxy
+    func removeProxy ( _ proxyName: String ) -> IProxy
     {
         return model!.removeProxy( proxyName )
     }
@@ -332,7 +325,7 @@ class Facade : IFacade
     * @param mediatorName
     * @return the <code>IMediator</code> previously registered with the given <code>mediatorName</code>.
     */
-    func retrieveMediator ( mediatorName: String ) -> IMediator
+    func retrieveMediator ( _ mediatorName: String ) -> IMediator
     {
         return view!.retrieveMediator( mediatorName )
     }
@@ -343,7 +336,7 @@ class Facade : IFacade
     * @param proxyName the name of the proxy to be retrieved.
     * @return the <code>IProxy</code> instance previously registered with the given <code>proxyName</code>.
     */
-    func retrieveProxy ( proxyName: String ) -> IProxy
+    func retrieveProxy ( _ proxyName: String ) -> IProxy
     {
         return model!.retrieveProxy( proxyName )
     }

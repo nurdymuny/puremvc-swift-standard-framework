@@ -64,7 +64,7 @@ class Proxy : NSObject, IProxy
         
     }
     
-    func initialize ( proxyName: String? , data: AnyObject? )
+    func initialize ( _ proxyName: String? , data: AnyObject? )
     {
         
         self.proxyName = proxyName

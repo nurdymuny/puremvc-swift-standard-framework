@@ -11,7 +11,7 @@ import UIKit
 class StartupCommand : SimpleCommand
 {
     
-    override func execute(notification: INotification)
+    override func execute(_ notification: INotification)
     {
         
         let root = notification.body as! UISplitViewController

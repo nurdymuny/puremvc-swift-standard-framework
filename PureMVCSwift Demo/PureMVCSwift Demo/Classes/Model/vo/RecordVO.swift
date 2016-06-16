@@ -21,7 +21,7 @@ class RecordVO : Equatable
     var year : String?
     var genres : String?
     
-    class func initWithData( data: JSON ) -> RecordVO
+    class func initWithData( _ data: JSON ) -> RecordVO
     {
         return RecordVO( interpret: data[ "interpret" ].string! ,
                          album:     data[ "album" ].string! ,
@@ -40,8 +40,8 @@ class RecordVO : Equatable
     func sortedGenres () -> String
     {
         
-        var a : Array = self.genres!.componentsSeparatedByString( ", " )
-        a.sortInPlace { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        var a : Array = self.genres!.components( separatedBy: ", " )
+        a.sort { $0.localizedCaseInsensitiveCompare($1) == ComparisonResult.orderedAscending }
         
         return a.combine( ", " )
 

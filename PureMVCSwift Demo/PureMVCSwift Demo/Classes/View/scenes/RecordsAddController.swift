@@ -47,7 +47,7 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
     }
     
-    override func viewDidAppear(animated: Bool)
+    override func viewDidAppear(_ animated: Bool)
     {
         
         super.viewDidAppear( animated )
@@ -88,15 +88,15 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
     
     func validateTextfields()
     {
-        self.btnDone.enabled = !txtInterpret!.text!.isEmpty && !txtAlbum!.text!.isEmpty && genres.count > 0 && txtYear?.tag > 0
+        self.btnDone.isEnabled = !txtInterpret!.text!.isEmpty && !txtAlbum!.text!.isEmpty && genres.count > 0 && txtYear?.tag > 0
     }
     
     func updateTextfields ()
     {
         
         txtGenre?.text = genresSelected.count > 0 ? genresSelected.combine( ", " ) : kLanguageSelectGenres
-        txtGenre?.textColor = genresSelected.count > 0 ? UIColor.blackColor() : UIColor( rgba: COLOR_LIGHT_GRAY )
-        txtYear?.textColor = txtYear?.tag > 0 ? UIColor.blackColor() : UIColor( rgba: COLOR_LIGHT_GRAY )
+        txtGenre?.textColor = genresSelected.count > 0 ? UIColor.black() : UIColor( rgba: COLOR_LIGHT_GRAY )
+        txtYear?.textColor = txtYear?.tag > 0 ? UIColor.black() : UIColor( rgba: COLOR_LIGHT_GRAY )
         
     }
     
@@ -105,29 +105,29 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
         self.view.endEditing( true )
         
-        self.dismissViewControllerAnimated( true , completion: nil )
+        self.dismiss( animated: true , completion: nil )
         
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
-        if textField.returnKeyType == UIReturnKeyType.Next
+        if textField.returnKeyType == UIReturnKeyType.next
         {
             
-            let current = self.tableView.indexPathForCell( textField.superview?.superview as! UITableViewCell )
-            let next = tableView.cellForRowAtIndexPath( NSIndexPath( forRow: current!.row + 1 , inSection: 0 ))
+            let current = self.tableView.indexPath( for: textField.superview?.superview as! UITableViewCell )
+            let next = tableView.cellForRow( at: IndexPath( row: (current! as NSIndexPath).row + 1 , section: 0 ))
 
             ( next as! RecordsAddInputCell ).txtInput.becomeFirstResponder()
             
         }
-        else if  textField.returnKeyType == UIReturnKeyType.Done
+        else if  textField.returnKeyType == UIReturnKeyType.done
         {
             textField.resignFirstResponder()
         }
         return true;
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         
         delay( EPSILON )
@@ -141,7 +141,7 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
     }
     
-    func textFieldShouldClear(textField: UITextField) -> Bool
+    func textFieldShouldClear(_ textField: UITextField) -> Bool
     {
         
         validateTextfields()
@@ -150,12 +150,12 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
     }
     
-    @IBAction func onCancelTouched(sender: AnyObject)
+    @IBAction func onCancelTouched(_ sender: AnyObject)
     {
         close()
     }
     
-    @IBAction func onDoneTouched(sender: AnyObject)
+    @IBAction func onDoneTouched(_ sender: AnyObject)
     {
         
         let record = RecordVO( interpret: txtInterpret?.text , album: txtAlbum?.text , year: txtYear?.text , genres: txtGenre?.text )
@@ -166,10 +166,10 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
     }
     
-    func onYearSelected ( selectedIndex: NSNumber! , origin: AnyObject! )
+    func onYearSelected ( _ selectedIndex: NSNumber! , origin: AnyObject! )
     {
         
-        txtYear?.text = years[ selectedIndex.integerValue ]
+        txtYear?.text = years[ selectedIndex.intValue ]
         txtYear?.tag = 1
         
         validateTextfields()
@@ -179,30 +179,30 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
     
     // MARK: - Table View
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    override func numberOfSections(in tableView: UITableView) -> Int
     {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return 4
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         
         var cell : UITableViewCell?
         
-        switch indexPath.row
+        switch (indexPath as NSIndexPath).row
         {
         case 0, 1:
             
-            let c = tableView.dequeueReusableCellWithIdentifier( kAddInputCell , forIndexPath: indexPath ) as! RecordsAddInputCell
+            let c = tableView.dequeueReusableCell( withIdentifier: kAddInputCell , for: indexPath ) as! RecordsAddInputCell
             
             c.txtInput.delegate = self
             
-            switch indexPath.row
+            switch (indexPath as NSIndexPath).row
             {
                 case 0:
                     
@@ -215,7 +215,7 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
                     
                     c.txtTitle.text = kLanguageAlbum
                     c.txtInput.placeholder = kLanguageEnterAlbum
-                    c.txtInput.returnKeyType = UIReturnKeyType.Done
+                    c.txtInput.returnKeyType = UIReturnKeyType.done
                     
                     txtAlbum = c.txtInput
 
@@ -227,9 +227,9 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
             
         case 2, 3:
             
-            let c = tableView.dequeueReusableCellWithIdentifier( kAddSelectCell , forIndexPath: indexPath ) as! RecordsAddSelectCell
+            let c = tableView.dequeueReusableCell( withIdentifier: kAddSelectCell , for: indexPath ) as! RecordsAddSelectCell
             
-            switch indexPath.row
+            switch (indexPath as NSIndexPath).row
             {
                 case 2:
                     
@@ -242,7 +242,7 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
                     
                     c.txtTitle.text = kLanguageGenres
                     c.txtSelect.text = kLanguageSelectGenres
-                    c.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                    c.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
                     
                     txtGenre = c.txtSelect
                     
@@ -259,20 +259,20 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
-        switch indexPath.row
+        switch (indexPath as NSIndexPath).row
         {
             case 2:
                 
                 _lastTextfield?.resignFirstResponder()
                 
-                ActionSheetStringPicker.showPickerWithTitle( kLanguageSelectYear , rows: years , initialSelection: 115 , target: self , successAction: "onYearSelected:origin:" , cancelAction: nil , origin: txtYear )
+                ActionSheetStringPicker.show( withTitle: kLanguageSelectYear , rows: years , initialSelection: 115 , target: self , successAction: "onYearSelected:origin:" , cancelAction: nil , origin: txtYear )
                 
             case 3:
             
-                performSegueWithIdentifier( SEGUE_ADD_GENRES , sender: self )
+                performSegue( withIdentifier: SEGUE_ADD_GENRES , sender: self )
                 
             default: ()
             }
@@ -281,7 +281,7 @@ class RecordsAddController : UITableViewController, UITextFieldDelegate, Records
     
     // MARK: - Segues
     
-    override func prepareForSegue( segue: UIStoryboardSegue, sender: AnyObject? )
+    override func prepare( for segue: UIStoryboardSegue, sender: AnyObject? )
     {
         if segue.identifier == SEGUE_ADD_GENRES
         {

@@ -46,28 +46,28 @@ class RecordsOverviewMediator : Mediator
                ]
     }
     
-    override func handleNotification( notification: INotification )
+    override func handleNotification( _ notification: INotification )
     {
         
         if ( notification.name == EVENT_RECORD_SHOULD_ADD )
         {
             
             let storyboard = UIStoryboard( name: STORYBOARD_MAIN , bundle: nil )
-            let navigationController = storyboard.instantiateViewControllerWithIdentifier( STORYBOARD_ADD_RECORD ) as! UINavigationController
+            let navigationController = storyboard.instantiateViewController( withIdentifier: STORYBOARD_ADD_RECORD ) as! UINavigationController
             let viewController = navigationController.viewControllers.first as! RecordsAddController
             viewController.genres = recordProxy!.genres
             
-            if UIDevice.currentDevice().userInterfaceIdiom == .Pad
+            if UIDevice.current().userInterfaceIdiom == .pad
             {
 
-                navigationController.modalPresentationStyle = UIModalPresentationStyle.CurrentContext;
+                navigationController.modalPresentationStyle = UIModalPresentationStyle.currentContext;
                 
-                self.controller.detailViewController?.presentViewController( navigationController , animated: true, completion: nil )
+                self.controller.detailViewController?.present( navigationController , animated: true, completion: nil )
 
             }
             else
             {
-                self.controller.presentViewController( navigationController , animated: true, completion: nil )
+                self.controller.present( navigationController , animated: true, completion: nil )
             }
             
         }

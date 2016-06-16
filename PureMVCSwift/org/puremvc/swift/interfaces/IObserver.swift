@@ -50,13 +50,13 @@ protocol IObserver
     * @param object the object to compare.
     * @return boolean indicating if the notification context and the object are the same.
     */
-    func compareNotifyContext( object: AnyObject ) -> Bool
+    func compareNotifyContext( _ object: AnyObject ) -> Bool
     
     /**
     * Notify the interested object.
     *
     * @param notification the <code>INotification</code> to pass to the interested object's notification method
     */
-    func notifyObserver ( notification: INotification )
+    func notifyObserver ( _ notification: INotification )
     
 }
