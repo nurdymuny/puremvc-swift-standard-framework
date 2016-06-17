@@ -32,10 +32,7 @@ import Foundation
 class Facade : IFacade
 {
     
-    struct Static
-    {
-        static var instance = Facade()
-    }
+    private static let instance = Facade()
     
     var controller : IController?
     var model : IModel?
@@ -55,9 +52,7 @@ class Facade : IFacade
     */
     init ()
     {
-        
         self.initializeFacade()
-        
     }
     
     /**
@@ -82,7 +77,7 @@ class Facade : IFacade
     */
     class func getInstance() -> Facade
     {
-        return Static.instance
+        return instance
     }
 
     

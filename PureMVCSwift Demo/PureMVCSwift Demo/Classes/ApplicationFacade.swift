@@ -29,7 +29,6 @@ let EPSILON = 0.001
 
 class ApplicationFacade : Facade
 {
-
     private static let instance = ApplicationFacade()
 
     func startup( _ root : AnyObject )
@@ -39,7 +38,7 @@ class ApplicationFacade : Facade
     
     override class func getInstance() -> ApplicationFacade
     {
-        return ApplicationFacade.instance
+        return instance
     }
     
     override func initializeController ()

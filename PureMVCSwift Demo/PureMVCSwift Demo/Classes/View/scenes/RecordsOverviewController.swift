@@ -96,7 +96,7 @@ class RecordsOverviewController : UITableViewController
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(RecordsOverviewController.didPressAdd(_:)) )
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: "didPressAdd:" )
         self.navigationItem.rightBarButtonItem = addButton
         
     }

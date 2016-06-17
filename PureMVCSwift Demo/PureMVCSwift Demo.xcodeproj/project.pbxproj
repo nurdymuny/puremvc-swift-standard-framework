@@ -574,10 +574,6 @@ fi
 					<dict>
 						<key>CreatedOnToolsVersion</key>
 						<string>6.0.1</string>
-						<key>DevelopmentTeam</key>
-						<string>8STUH2S52C</string>
-						<key>DevelopmentTeamName</key>
-						<string>Brian Davis</string>
 						<key>LastSwiftMigration</key>
 						<string>0800</string>
 					</dict>

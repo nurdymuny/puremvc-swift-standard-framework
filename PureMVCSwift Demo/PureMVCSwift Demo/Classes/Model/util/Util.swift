@@ -15,11 +15,12 @@ func delay(_ time:TimeInterval, closure:()->()) ->  dispatch_cancelable_closure?
     
     func dispatch_later(_ clsr:()->())
     {
+        let interval = DispatchTimeInterval.milliseconds(Int(time * 1000))
         DispatchQueue.main.after(
-            when: DispatchTime.now() + DispatchTimeInterval.milliseconds(Int(time * 1000)), execute: clsr)
+            when: DispatchTime.now() + interval, execute: clsr)
     }
     
-    var closure: (() -> Void)? = closure
+    var closure:(() -> Void)? = closure
     var cancelableClosure:dispatch_cancelable_closure?
     
     let delayedClosure:dispatch_cancelable_closure = { cancel in
